@@ -14,9 +14,7 @@ const Submit = ({
 }) => {
   const { pending } = useFormStatus();
 
-  const resultColor = isCorrect ? 'green-400' : 'red-400';
-
-  const theme = !isTried || pending ? 'slate-400' : resultColor;
+  const isNormal = !isTried || pending;
 
   return (
     <div className="h-lvh w-full flex justify-center">
@@ -26,19 +24,24 @@ const Submit = ({
           className="ring-2 ring-slate-400 outline-none w-full p-2 rounded-xl"
           name="email"
           placeholder="Email"
+          required
         />
         <input
           className="ring-2 ring-slate-400 outline-none w-full p-2 rounded-xl"
           name="username"
           placeholder="Username"
+          required
         />
         <input
           type="password"
-          className={`ring-2 ring-${theme} outline-none w-full p-2 rounded-xl`}
+          className={`ring-2 ${isNormal ? 'ring-slate-400' : isCorrect ? 'ring-green-400' : 'ring-red-400'} outline-none w-full p-2 rounded-xl`}
           name="password"
           placeholder="Password"
+          required
         />
-        <div className={`h-6 text-${theme} font-extrabold`}>
+        <div
+          className={`h-6 ${isNormal ? 'text-slate-400' : isCorrect ? 'text-green-400' : 'text-red-400'} font-extrabold`}
+        >
           {isTried &&
             !pending &&
             (isCorrect ? 'correct password' : 'wrong password')}
@@ -46,7 +49,7 @@ const Submit = ({
         <button
           type="submit"
           disabled={pending}
-          className={`w-full p-3 rounded-xl font-bold bg-${theme} text-white`}
+          className={`w-full p-3 rounded-xl font-bold ${isNormal ? 'bg-slate-400' : isCorrect ? 'bg-green-400' : 'bg-red-400'} text-white`}
         >
           {!isTried
             ? 'submit'
