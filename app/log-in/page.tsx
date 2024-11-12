@@ -3,7 +3,7 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import handleOnSubmit, { FormResult } from './action';
+import { handleOnSubmit, FormResult } from './action';
 
 const Submit = ({ isTried, errors }: FormResult) => {
   const { pending } = useFormStatus();

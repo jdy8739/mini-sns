@@ -4,15 +4,7 @@
 
 import { z } from 'zod';
 import { parseErrors, wait } from '@/utils/utils';
-
-const formScheme = z.object({
-  email: z.string().email().includes('@zod.com'),
-  username: z.string().min(5),
-  password: z
-    .string()
-    .min(10)
-    .regex(/.*[0-9].*/, '숫자를 최소 1개 이상 포함해야 합니다'),
-});
+import { formScheme } from '@/schemes/schemes';
 
 type FormType = z.infer<typeof formScheme>;
 
@@ -46,5 +38,5 @@ const handleOnSubmit = async (_: FormResult, current: FormData) => {
   };
 };
 
-export default handleOnSubmit;
+export { handleOnSubmit };
 export type { FormResult };
