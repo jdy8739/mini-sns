@@ -3,11 +3,7 @@
 'use server';
 
 import { z } from 'zod';
-
-const wait = (ms: number) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+import { parseErrors, wait } from '@/utils/utils';
 
 const formScheme = z.object({
   email: z.string().email().includes('@zod.com'),
@@ -38,20 +34,8 @@ const handleOnSubmit = async (_: FormResult, current: FormData) => {
 
   const parseResult = formScheme.safeParse({ email, username, password });
 
-  const errorList = parseResult.error?.errors;
-
   /** parsed error list */
-  const errors = errorList?.reduce<Errors>((a, b) => {
-    const key = b.path[0] as keyof FormType;
-
-    if (key in a) {
-      a[key] = a[key] ? [...a[key], b.message] : [b.message];
-    } else {
-      a[key] = [b.message];
-    }
-
-    return a;
-  }, {});
+  const errors = parseErrors<Errors>(parseResult.error?.errors);
 
   return {
     email,
