@@ -14,11 +14,11 @@ export const parseErrors = <T extends object>(
       const key = b.path[0] as keyof T;
 
       if (key in a) {
-        const value = (
+        const errorList = (
           a[key] ? [...(a[key] as string[]), b.message] : [b.message]
         ) as T[keyof T];
 
-        a[key] = value;
+        a[key] = errorList;
       } else {
         a[key] = [b.message] as T[keyof T];
       }

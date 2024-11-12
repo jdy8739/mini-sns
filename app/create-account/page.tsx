@@ -3,9 +3,9 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import { handleOnSubmit } from './action';
+import { CreateAccountResult, handleOnSubmit } from './action';
 
-const Submit = ({ isTried, errors }: any) => {
+const Submit = ({ isTried, errors }: CreateAccountResult) => {
   const { pending } = useFormStatus();
 
   const isNormal = !isTried || pending;
@@ -52,7 +52,7 @@ const Submit = ({ isTried, errors }: any) => {
         </div>
         <input
           type="password"
-          className={`ring-2 ${isNormal ? 'ring-slate-400' : !errors.password ? 'ring-green-400' : 'ring-red-400'} outline-none w-full p-2 rounded-xl`}
+          className={`ring-2 ${isNormal ? 'ring-slate-400' : !errors.passwordConfirm ? 'ring-green-400' : 'ring-red-400'} outline-none w-full p-2 rounded-xl`}
           name="passwordConfirm"
           placeholder="Password Confirm"
           required
@@ -60,7 +60,7 @@ const Submit = ({ isTried, errors }: any) => {
         <div
           className={`${isNormal ? 'text-slate-400' : !errors.password ? 'text-green-400' : 'text-red-400'} font-extrabold`}
         >
-          {isTried && !pending && errors.password?.[0]}
+          {isTried && !pending && errors.passwordConfirm?.[0]}
         </div>
         <button
           type="submit"
@@ -81,12 +81,15 @@ const Submit = ({ isTried, errors }: any) => {
 };
 
 const CreateAccountPage = () => {
-  const [state, formAction] = useFormState<any>(
-    handleOnSubmit as unknown as (state: any) => any,
+  const [state, formAction] = useFormState<CreateAccountResult>(
+    handleOnSubmit as unknown as (
+      state: CreateAccountResult,
+    ) => CreateAccountResult,
     {
       email: '',
       username: '',
       password: '',
+      passwordConfirm: '',
       isTried: false,
       errors: {},
     },
