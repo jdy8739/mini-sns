@@ -58,7 +58,7 @@ const Submit = ({ isTried, errors }: CreateAccountResult) => {
           required
         />
         <div
-          className={`${isNormal ? 'text-slate-400' : !errors.password ? 'text-green-400' : 'text-red-400'} font-extrabold`}
+          className={`${isNormal ? 'text-slate-400' : !errors.passwordConfirm ? 'text-green-400' : 'text-red-400'} font-extrabold`}
         >
           {isTried && !pending && errors.passwordConfirm?.[0]}
         </div>

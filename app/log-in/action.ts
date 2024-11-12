@@ -3,7 +3,7 @@
 'use server';
 
 import { z } from 'zod';
-import { parseErrors, wait } from '@/utils/utils';
+import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
 import { formScheme } from '@/schemes/schemes';
 
 type FormType = z.infer<typeof formScheme>;
@@ -18,21 +18,20 @@ type FormResult = FormType & {
 const handleOnSubmit = async (_: FormResult, current: FormData) => {
   await wait(1000);
 
-  const email = current.get('email');
+  const values = extractValuesFromFormData(current, [
+    'email',
+    'username',
+    'password',
+    'passwordConfirm',
+  ]);
 
-  const username = current.get('username');
-
-  const password = current.get('password');
-
-  const parseResult = formScheme.safeParse({ email, username, password });
+  const parseResult = formScheme.safeParse(values);
 
   /** parsed error list */
   const errors = parseErrors<Errors>(parseResult.error?.errors);
 
   return {
-    email,
-    username,
-    password,
+    ...values,
     isTried: true,
     errors: errors ?? {},
   };

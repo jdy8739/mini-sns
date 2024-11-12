@@ -1,11 +1,23 @@
 /* eslint-disable no-param-reassign */
 import { z } from 'zod';
 
+/** wait form ms */
 export const wait = (ms: number) =>
   new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 
+/** extract formdata values from FormData objects by list of keys */
+export const extractValuesFromFormData = <T extends readonly string[]>(
+  formData: FormData,
+  keys: T,
+) =>
+  keys.reduce(
+    (a, b) => ({ ...a, [b]: formData.get(b) }),
+    {} as Record<T[number], string>,
+  );
+
+/** parse zod error from zod issue list */
 export const parseErrors = <T extends object>(
   errorList: z.ZodIssue[] | undefined,
 ): T => {
