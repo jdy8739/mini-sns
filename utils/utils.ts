@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { z } from 'zod';
 
-/** wait form ms */
+/** wait for ms */
 export const wait = (ms: number) =>
   new Promise((resolve) => {
     setTimeout(resolve, ms);
