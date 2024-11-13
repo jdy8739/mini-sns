@@ -37,12 +37,11 @@ const handleOnSubmit = async (_: FormResult, current: FormData) => {
     const id = await login(values.email, values.password);
 
     if (id) {
-      updateSession(id);
+      await updateSession(id);
 
       redirect('/profile');
-    } else {
-      errors.email = ['The id or password is wrong!!'];
     }
+    errors.email = ['The id or password is wrong!!'];
   }
 
   return {
