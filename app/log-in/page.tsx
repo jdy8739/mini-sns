@@ -20,9 +20,8 @@ const Submit = ({ isTried, errors }: FormResult) => {
           name="email"
           placeholder="Email"
           required
-          isTried={isTried}
+          showError={isTried && !pending}
           isNormal={isNormal}
-          pending={pending}
           errors={errors.email}
         />
         <Input
@@ -30,9 +29,8 @@ const Submit = ({ isTried, errors }: FormResult) => {
           name="password"
           placeholder="Password"
           required
-          isTried={isTried}
+          showError={isTried && !pending}
           isNormal={isNormal}
-          pending={pending}
           errors={errors.password}
         />
         <Button

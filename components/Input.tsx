@@ -3,11 +3,10 @@
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   errors?: string[];
   isNormal: boolean;
-  isTried: boolean;
-  pending: boolean;
+  showError: boolean;
 }
 
-const Input = ({ errors, isNormal, isTried, pending, ...rest }: InputProps) => {
+const Input = ({ errors, isNormal, showError, ...rest }: InputProps) => {
   return (
     <>
       <input
@@ -17,7 +16,7 @@ const Input = ({ errors, isNormal, isTried, pending, ...rest }: InputProps) => {
       <div
         className={`${isNormal ? 'text-slate-400' : !errors ? 'text-green-400' : 'text-red-400'} font-extrabold`}
       >
-        {isTried && !pending && errors?.[0]}
+        {showError && errors?.[0]}
       </div>
     </>
   );

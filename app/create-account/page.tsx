@@ -20,9 +20,8 @@ const Submit = ({ isTried, errors }: CreateAccountResult) => {
           name="email"
           placeholder="Email"
           required
-          isTried={isTried}
+          showError={isTried && !pending}
           isNormal={isNormal}
-          pending={pending}
           errors={errors.email}
         />
         <Input
@@ -30,9 +29,8 @@ const Submit = ({ isTried, errors }: CreateAccountResult) => {
           name="username"
           placeholder="Username"
           required
-          isTried={isTried}
+          showError={isTried && !pending}
           isNormal={isNormal}
-          pending={pending}
           errors={errors.username}
         />
         <Input
@@ -40,9 +38,8 @@ const Submit = ({ isTried, errors }: CreateAccountResult) => {
           name="password"
           placeholder="Password"
           required
-          isTried={isTried}
+          showError={isTried && !pending}
           isNormal={isNormal}
-          pending={pending}
           errors={errors.password}
         />
         <Input
@@ -50,9 +47,8 @@ const Submit = ({ isTried, errors }: CreateAccountResult) => {
           name="passwordConfirm"
           placeholder="Password Confirm"
           required
-          isTried={isTried}
+          showError={isTried && !pending}
           isNormal={isNormal}
-          pending={pending}
           errors={errors.passwordConfirm}
         />
         <Button
