@@ -47,7 +47,7 @@ const handleOnSubmit = async (_: CreateAccountResult, current: FormData) => {
   /** parsed error list */
   const errors = parseErrors<Errors>(parseResult.error?.errors);
 
-  if (Object.keys(errors).length === 0) {
+  if (parseResult.success) {
     const id = await createUser(values);
 
     if (id) {

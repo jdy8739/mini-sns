@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import db from '@/db/db';
 
-const hashPassword = async (password: string) => {
+export const hashPassword = async (password: string) => {
   return bcrypt.hash(password, 10);
 };
 
-const createUser = async ({
+export const createUser = async ({
   email,
   password,
 }: {
@@ -30,7 +30,7 @@ const createUser = async ({
   }
 };
 
-const findUserByEmail = async (email: string) => {
+export const findUserByEmail = async (email: string) => {
   try {
     const user = await db.user.findFirst({
       where: {
@@ -48,20 +48,18 @@ const findUserByEmail = async (email: string) => {
   }
 };
 
-const checkDuplicateEmail = async (email: string) => {
+export const checkDuplicateEmail = async (email: string) => {
   return !!(await findUserByEmail(email));
 };
 
-const login = async (email: string, password: string) => {
+export const login = async (email: string, password: string) => {
   const user = await findUserByEmail(email);
 
   if (!user) {
-    return false;
+    return null;
   }
 
   const doesUserExist = await bcrypt.compare(password, user.password);
 
-  return doesUserExist;
+  return doesUserExist ? user.id : null;
 };
-
-export { hashPassword, createUser, checkDuplicateEmail, login };

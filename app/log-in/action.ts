@@ -7,17 +7,9 @@ import { redirect } from 'next/navigation';
 import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
 import { formScheme } from '@/schemes/schemes';
 import { login } from '@/utils/auth';
+import { updateSession } from '@/utils/session';
 
-const loginScheme = formScheme.refine(
-  async ({ email, password }) => {
-    const doesUserExist = await login(email, password);
-
-    return doesUserExist;
-  },
-  { message: 'The id or password is wrong!!', path: ['email'] },
-);
-
-type FormType = z.infer<typeof loginScheme>;
+type FormType = z.infer<typeof formScheme>;
 
 type Errors = Partial<Record<keyof FormType, string[]>>;
 
@@ -36,13 +28,21 @@ const handleOnSubmit = async (_: FormResult, current: FormData) => {
     'passwordConfirm',
   ] as const);
 
-  const parseResult = await loginScheme.safeParseAsync(values);
+  const parseResult = formScheme.safeParse(values);
 
   /** parsed error list */
   const errors = parseErrors<Errors>(parseResult.error?.errors);
 
-  if (Object.keys(errors).length === 0) {
-    redirect('/profile');
+  if (parseResult.success) {
+    const id = await login(values.email, values.password);
+
+    if (id) {
+      updateSession(id);
+
+      redirect('/profile');
+    } else {
+      errors.email = ['The id or password is wrong!!'];
+    }
   }
 
   return {
