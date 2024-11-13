@@ -30,7 +30,7 @@ const createUser = async ({
   }
 };
 
-const checkDuplicateEmail = async (email: string) => {
+const findUserByEmail = async (email: string) => {
   try {
     const user = await db.user.findFirst({
       where: {
@@ -38,13 +38,30 @@ const checkDuplicateEmail = async (email: string) => {
       },
       select: {
         id: true,
+        password: true,
       },
     });
 
-    return !!user?.id;
+    return user;
   } catch (e) {
     return null;
   }
 };
 
-export { hashPassword, createUser, checkDuplicateEmail };
+const checkDuplicateEmail = async (email: string) => {
+  return !!(await findUserByEmail(email));
+};
+
+const login = async (email: string, password: string) => {
+  const user = await findUserByEmail(email);
+
+  if (!user) {
+    return false;
+  }
+
+  const doesUserExist = await bcrypt.compare(password, user.password);
+
+  return doesUserExist;
+};
+
+export { hashPassword, createUser, checkDuplicateEmail, login };

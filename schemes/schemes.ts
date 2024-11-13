@@ -3,7 +3,6 @@ import { z } from 'zod';
 
 const formScheme = z.object({
   email: z.string().email().includes('@zod.com'),
-  username: z.string().min(5),
   password: z
     .string()
     .min(10)

@@ -28,17 +28,6 @@ const Submit = ({ isTried, errors }: FormResult) => {
           {isTried && !pending && errors.email?.[0]}
         </div>
         <input
-          className={`ring-2 ${isNormal ? 'ring-slate-400' : !errors.username ? 'ring-green-400' : 'ring-red-400'} outline-none w-full p-2 rounded-xl`}
-          name="username"
-          placeholder="Username"
-          required
-        />
-        <div
-          className={`${isNormal ? 'text-slate-400' : !errors.username ? 'text-green-400' : 'text-red-400'} font-extrabold`}
-        >
-          {isTried && !pending && errors.username?.[0]}
-        </div>
-        <input
           type="password"
           className={`ring-2 ${isNormal ? 'ring-slate-400' : !errors.password ? 'ring-green-400' : 'ring-red-400'} outline-none w-full p-2 rounded-xl`}
           name="password"
@@ -73,7 +62,6 @@ const LoginPage = () => {
     handleOnSubmit as unknown as (state: FormResult) => FormResult,
     {
       email: '',
-      username: '',
       password: '',
       isTried: false,
       errors: {},

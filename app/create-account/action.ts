@@ -7,7 +7,7 @@ import { formScheme } from '@/schemes/schemes';
 import { checkDuplicateEmail, createUser } from '@/utils/auth';
 
 const createAccountScheme = formScheme
-  .extend({ passwordConfirm: z.string() })
+  .extend({ username: z.string().min(5), passwordConfirm: z.string() })
   .refine(({ password, passwordConfirm }) => password === passwordConfirm, {
     message: 'The password and password confirm must be same!',
     path: ['passwordConfirm'],
@@ -52,6 +52,8 @@ const handleOnSubmit = async (_: CreateAccountResult, current: FormData) => {
 
     if (id) {
       redirect('/log-in');
+    } else {
+      errors.email = ['Failed to create user'];
     }
   }
 
