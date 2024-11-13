@@ -1,10 +1,9 @@
-/* eslint-disable no-nested-ternary */
-
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
 import { CreateAccountResult, handleOnSubmit } from './action';
 import Input from '@/components/Input';
+import Button from '@/components/button';
 
 const Submit = ({ isTried, errors }: CreateAccountResult) => {
   const { pending } = useFormStatus();
@@ -56,19 +55,12 @@ const Submit = ({ isTried, errors }: CreateAccountResult) => {
           pending={pending}
           errors={errors.passwordConfirm}
         />
-        <button
-          type="submit"
-          disabled={pending}
-          className={`w-full p-3 rounded-xl font-bold ${isNormal ? 'bg-slate-400' : isCertified ? 'bg-green-400' : 'bg-red-400'} text-white`}
-        >
-          {!isTried
-            ? 'submit'
-            : pending
-              ? 'loading'
-              : isCertified
-                ? "Let's go!"
-                : 'Oh No..'}
-        </button>
+        <Button
+          pending={pending}
+          isTried={isTried}
+          isNormal={isNormal}
+          isCertified={isCertified}
+        />
       </div>
     </div>
   );
