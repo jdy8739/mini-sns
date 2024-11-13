@@ -12,6 +12,8 @@ const Submit = ({ isTried, errors }: FormResult) => {
 
   const isCertified = Object.keys(errors).length === 0;
 
+  const showError = isTried && !pending;
+
   return (
     <div className="h-lvh w-full flex justify-center">
       <div className="flex flex-col justify-center items-center gap-3 h-full w-80 focus-within::outline-none text-slate-400">
@@ -20,7 +22,7 @@ const Submit = ({ isTried, errors }: FormResult) => {
           name="email"
           placeholder="Email"
           required
-          showError={isTried && !pending}
+          showError={showError}
           isNormal={isNormal}
           errors={errors.email}
         />
@@ -29,7 +31,7 @@ const Submit = ({ isTried, errors }: FormResult) => {
           name="password"
           placeholder="Password"
           required
-          showError={isTried && !pending}
+          showError={showError}
           isNormal={isNormal}
           errors={errors.password}
         />
