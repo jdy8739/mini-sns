@@ -48,6 +48,25 @@ export const findUserByEmail = async (email: string) => {
   }
 };
 
+export const findUserById = async (id: number) => {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        email: true,
+        bio: true,
+      },
+    });
+
+    return user;
+  } catch (e) {
+    return null;
+  }
+};
+
 export const checkDuplicateEmail = async (email: string) => {
   return !!(await findUserByEmail(email));
 };
