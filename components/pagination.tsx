@@ -49,13 +49,20 @@ const Pagination = ({
     onPageChange?.(page, size);
   }, [page, pathname, router, searchPage, searchSize, size, onPageChange]);
 
+  const { isPrevDisabled, isNextDisabled } = useMemo(() => {
+    return {
+      isPrevDisabled: page === 1,
+      isNextDisabled: page * size >= totalCount,
+    };
+  }, [page, size, totalCount]);
+
   return (
     <>
       <button
         type="button"
-        disabled={page === 1}
+        disabled={isPrevDisabled}
         onClick={() => {
-          if (page === 1) {
+          if (isPrevDisabled) {
             return;
           }
 
@@ -66,8 +73,9 @@ const Pagination = ({
       </button>
       <button
         type="button"
+        disabled={isNextDisabled}
         onClick={() => {
-          if (page === totalCount) {
+          if (isNextDisabled) {
             return;
           }
 

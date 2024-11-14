@@ -8,11 +8,15 @@ import { getTweetsByPagination } from './action';
 const Home = () => {
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
 
+  const [totalCount, setTotalCount] = useState(0);
+
   const handleOnPageChange = useCallback(async (page: number, size: number) => {
     const [tweetsByPage, totalCount] = await getTweetsByPagination({
       page,
       size,
     });
+
+    setTotalCount(totalCount);
 
     if (tweetsByPage) {
       setTweets(tweetsByPage);
@@ -28,7 +32,7 @@ const Home = () => {
       ) : (
         <div>loading</div>
       )}
-      <Pagination totalCount={10} onPageChange={handleOnPageChange} />
+      <Pagination totalCount={totalCount} onPageChange={handleOnPageChange} />
     </div>
   );
 };
