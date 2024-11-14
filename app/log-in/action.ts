@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-
 'use server';
 
 import { z } from 'zod';

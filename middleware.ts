@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from './utils/session';
 
 const URLS_PUBLIC_ONLY: Readonly<Record<string, boolean>> = {
+  '/': false,
   '/create-account': true,
   '/log-in': true,
   '/profile': false,
