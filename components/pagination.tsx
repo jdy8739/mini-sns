@@ -57,8 +57,9 @@ const Pagination = ({
   }, [page, size, totalCount]);
 
   return (
-    <>
+    <section>
       <button
+        className="w-20 border-slate-400 border-2 rounded-md text-slate-400 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
         type="button"
         disabled={isPrevDisabled}
         onClick={() => {
@@ -72,6 +73,7 @@ const Pagination = ({
         prev
       </button>
       <button
+        className="w-20 border-slate-400 border-2 rounded-md text-slate-400 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
         type="button"
         disabled={isNextDisabled}
         onClick={() => {
@@ -84,7 +86,7 @@ const Pagination = ({
       >
         next
       </button>
-    </>
+    </section>
   );
 };
 

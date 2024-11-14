@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const TweetList = ({ tweets }: { tweets: Tweet[] | null }) => {
   return (
-    <>
+    <section>
       {tweets ? (
         tweets.map((tweet) => {
           return (
@@ -17,7 +17,7 @@ const TweetList = ({ tweets }: { tweets: Tweet[] | null }) => {
       ) : (
         <div>loading</div>
       )}
-    </>
+    </section>
   );
 };
 

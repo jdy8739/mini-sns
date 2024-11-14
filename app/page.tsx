@@ -22,10 +22,12 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <TweetList tweets={tweets} />
-      <Pagination totalCount={totalCount} onPageChange={handleOnPageChange} />
-    </div>
+    <main>
+      <div>
+        <TweetList tweets={tweets} />
+        <Pagination totalCount={totalCount} onPageChange={handleOnPageChange} />
+      </div>
+    </main>
   );
 };
 

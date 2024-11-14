@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getTweetById } from '@/app/action';
+import { formatToTimeAgo } from '@/utils/date';
 
 const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
   const tweetId = Number(id);
@@ -16,7 +17,16 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
 
   return (
     <div>
-      tweet {tweet.tweet} {tweet.userId}
+      <div>
+        <span>{tweet.userId}</span>
+      </div>
+      <p>{tweet.tweet}</p>
+      <div>
+        <span>{formatToTimeAgo(new Date(tweet.createdAt).getTime())}</span>
+      </div>
+      <div>
+        <span>{tweet.user.email}</span>
+      </div>
     </div>
   );
 };
