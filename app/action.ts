@@ -1,7 +1,7 @@
 'use server';
 
 import { Tweet } from '@prisma/client';
-import { findTweetsByPagination } from '@/utils/tweets';
+import { findTweetById, findTweetsByPagination } from '@/utils/tweets';
 
 export const getTweetsByPagination = async ({
   page,
@@ -19,5 +19,7 @@ export const getTweetsByPagination = async ({
 };
 
 export const getTweetById = async (id: number) => {
-  ///
+  const tweet = await findTweetById(id);
+
+  return tweet;
 };

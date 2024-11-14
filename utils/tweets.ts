@@ -20,5 +20,11 @@ export const findTweetsByPagination = async (pagination?: {
 };
 
 export const findTweetById = async (id: number) => {
-  //
+  try {
+    const tweet = await db.tweet.findUnique({ where: { id } });
+
+    return tweet;
+  } catch (e) {
+    return null;
+  }
 };

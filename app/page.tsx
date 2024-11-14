@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { Tweet } from '@prisma/client';
 import Pagination from '@/components/pagination';
 import { getTweetsByPagination } from './action';
+import TweetList from '@/components/tweet-list';
 
 const Home = () => {
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
@@ -17,21 +18,12 @@ const Home = () => {
     });
 
     setTotalCount(totalCount);
-
-    if (tweetsByPage) {
-      setTweets(tweetsByPage);
-    }
+    setTweets(tweetsByPage);
   }, []);
 
   return (
     <div>
-      {tweets ? (
-        tweets.map((tweet) => {
-          return <div key={tweet.id}>{tweet.tweet}</div>;
-        })
-      ) : (
-        <div>loading</div>
-      )}
+      <TweetList tweets={tweets} />
       <Pagination totalCount={totalCount} onPageChange={handleOnPageChange} />
     </div>
   );
