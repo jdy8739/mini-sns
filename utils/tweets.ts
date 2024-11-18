@@ -41,3 +41,18 @@ export const findTweetById = async (
     return null;
   }
 };
+
+export const saveTweet = async (tweet: string, userId: number) => {
+  try {
+    const newTweet = await db.tweet.create({
+      data: { tweet, userId },
+      select: {
+        id: true,
+      },
+    });
+
+    return newTweet.id;
+  } catch (e) {
+    return null;
+  }
+};
