@@ -1,11 +1,12 @@
 'use server';
 
-import { z } from 'zod';
 import { redirect } from 'next/navigation';
-import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
+import { z } from 'zod';
+
 import { formScheme } from '@/schemes/schemes';
 import { login } from '@/utils/auth';
 import { updateSession } from '@/utils/session';
+import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
 
 type FormType = z.infer<typeof formScheme>;
 

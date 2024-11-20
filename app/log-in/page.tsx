@@ -1,9 +1,11 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
+
 import { handleOnSubmit, FormResult } from './action';
-import Input from '@/components/Input';
+
 import Button from '@/components/button';
+import Input from '@/components/Input';
 
 const Submit = ({ isTried, errors }: FormResult) => {
   const { pending } = useFormStatus();

@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 
-import { toggleLike } from '@/app/tweet/[id]/action';
+import { toggleLike } from '@/app/tweet/[id]/action-like';
 
 const LikeButton = ({
   userId,

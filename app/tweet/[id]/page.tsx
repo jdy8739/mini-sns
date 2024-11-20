@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
 
-import { checkIsLiked, getNumberOfLikes } from './action';
+import { checkIsLiked, getNumberOfLikes } from './action-like';
 
 import { getCachedTweetById } from '@/app/action';
 import LikeButton from '@/components/like-button';
+import Response from '@/components/response';
 import { formatToTimeAgo } from '@/utils/date';
 import { getSession } from '@/utils/session';
 
@@ -45,6 +46,9 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
             <LikeButton userId={userId} tweetId={tweetId} isLiked={isLiked} />
           </div>
         </div>
+      </section>
+      <section>
+        <Response tweetId={tweetId} />
       </section>
     </main>
   );
