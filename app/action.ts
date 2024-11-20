@@ -2,6 +2,7 @@
 
 import { Tweet } from '@prisma/client';
 import { findTweetById, findTweetsByPagination } from '@/utils/tweets';
+import cache from '@/cache/cache';
 
 export const getTweetsByPagination = async ({
   page,
@@ -16,6 +17,21 @@ export const getTweetsByPagination = async ({
   });
 
   return [tweets, totalCount];
+};
+
+export const getCachedTweets = async ({
+  page,
+  size,
+}: {
+  page: number;
+  size: number;
+}) => {
+  const cacheFunction = cache(getTweetsByPagination, [
+    'tweets',
+    `${page}-${size}`,
+  ]);
+
+  return cacheFunction({ page, size });
 };
 
 export const getTweetById = async (id: number) => {

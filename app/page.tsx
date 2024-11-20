@@ -3,8 +3,9 @@
 import { useCallback, useState } from 'react';
 import { Tweet } from '@prisma/client';
 import Pagination from '@/components/pagination';
-import { getTweetsByPagination } from './action';
+
 import TweetList from '@/components/tweet-list';
+import { getCachedTweets } from './action';
 
 const Home = () => {
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
@@ -12,7 +13,7 @@ const Home = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   const handleOnPageChange = useCallback(async (page: number, size: number) => {
-    const [tweetsByPage, totalCount] = await getTweetsByPagination({
+    const [tweetsByPage, totalCount] = await getCachedTweets({
       page,
       size,
     });
