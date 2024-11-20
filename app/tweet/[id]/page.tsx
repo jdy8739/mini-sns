@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { checkIsLiked, getNumberOfLikes } from './action-like';
+import { getResponseByTweetId } from './action-response';
 
 import { getCachedTweetById } from '@/app/action';
 import LikeButton from '@/components/like-button';
@@ -27,6 +28,8 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
 
   const isLiked = await checkIsLiked({ userId, tweetId });
 
+  const responses = await getResponseByTweetId(tweetId);
+
   return (
     <main>
       <section>
@@ -48,7 +51,7 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
         </div>
       </section>
       <section>
-        <Response tweetId={tweetId} />
+        <Response tweetId={tweetId} userId={userId} responses={responses} />
       </section>
     </main>
   );

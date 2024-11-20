@@ -7,6 +7,17 @@ import db from '@/db/db';
 import { getSession } from '@/utils/session';
 import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
 
+// TODO: cache responses
+export const getResponseByTweetId = async (tweetId: number) => {
+  try {
+    const responses = await db.response.findMany({ where: { tweetId } });
+
+    return responses;
+  } catch (e) {
+    return [];
+  }
+};
+
 export const createResponse = async ({
   userId,
   tweetId,
@@ -19,9 +30,7 @@ export const createResponse = async ({
   try {
     const { id } = await db.response.create({
       data: { userId, tweetId, content },
-      select: {
-        id: true,
-      },
+      select: { id: true },
     });
 
     return id;
@@ -41,6 +50,7 @@ export const deleteResponse = async ({ id }: { id: number }) => {
 };
 
 const responseScheme = z.object({
+  id: z.number().nullable().optional(),
   tweetId: z.coerce.number(),
   content: z.string().min(1),
 });
@@ -57,6 +67,7 @@ const handleOnSubmit = async (_: ResponseFormResult, current: FormData) => {
   await wait(1000);
 
   const values = extractValuesFromFormData(current, [
+    'id',
     'content',
     'tweetId',
   ] as const);
@@ -76,7 +87,9 @@ const handleOnSubmit = async (_: ResponseFormResult, current: FormData) => {
         content: values.content,
       });
 
-      if (!responseId) {
+      if (responseId) {
+        values.id = String(responseId);
+      } else {
         errors.content = ['Failed to create response'];
       }
 
@@ -88,7 +101,6 @@ const handleOnSubmit = async (_: ResponseFormResult, current: FormData) => {
 
   return {
     ...values,
-    isTried: true,
     errors: errors ?? {},
   };
 };
