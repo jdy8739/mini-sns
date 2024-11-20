@@ -29,10 +29,11 @@ export const getCachedTweets = async ({
   page: number;
   size: number;
 }) => {
-  const cacheTweets = cache(getTweetsByPagination, [
-    'tweets',
-    `${page}-${size}`,
-  ]);
+  const cacheTweets = cache(
+    getTweetsByPagination,
+    ['tweets', `${page}-${size}`],
+    { tags: ['tweets'] },
+  );
 
   return cacheTweets({ page, size });
 };

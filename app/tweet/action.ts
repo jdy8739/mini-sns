@@ -1,10 +1,12 @@
 'use server';
 
-import { z } from 'zod';
+import { revalidateTag } from 'next/cache';
 import { notFound, redirect } from 'next/navigation';
-import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
+import { z } from 'zod';
+
 import { getSession } from '@/utils/session';
 import { saveTweet } from '@/utils/tweets';
+import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
 
 const tweetScheme = z.object({
   tweet: z.string().min(1),
@@ -34,6 +36,8 @@ const handleOnSubmit = async (_: TweetFormResult, current: FormData) => {
 
     if (userId) {
       const tweetId = await saveTweet(values.tweet, userId);
+
+      revalidateTag('tweets');
 
       redirect(`/tweet/${tweetId}`);
     } else {
