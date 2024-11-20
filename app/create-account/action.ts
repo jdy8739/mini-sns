@@ -1,10 +1,11 @@
 'use server';
 
-import { z } from 'zod';
 import { redirect } from 'next/navigation';
-import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
+import { z } from 'zod';
+
 import { formScheme } from '@/schemes/schemes';
 import { checkDuplicateEmail, createUser } from '@/utils/auth';
+import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
 
 const createAccountScheme = formScheme
   .extend({ username: z.string().min(5), passwordConfirm: z.string() })

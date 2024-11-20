@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+
 import { findUserById } from '@/utils/auth';
 import { getSession } from '@/utils/session';
 

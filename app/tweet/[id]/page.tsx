@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getTweetById } from '@/app/action';
+
+import { getCachedTweetById } from '@/app/action';
 import { formatToTimeAgo } from '@/utils/date';
 
 const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
@@ -9,7 +10,7 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
     notFound();
   }
 
-  const tweet = await getTweetById(tweetId);
+  const tweet = await getCachedTweetById(tweetId);
 
   if (!tweet) {
     notFound();

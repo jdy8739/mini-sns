@@ -1,9 +1,11 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
+
 import { handleOnSubmit, TweetFormResult } from './action';
-import Input from '@/components/Input';
+
 import Button from '@/components/button';
+import Input from '@/components/Input';
 
 const AddTweet = ({ isTried, errors }: TweetFormResult) => {
   const { pending } = useFormStatus();
