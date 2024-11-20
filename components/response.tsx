@@ -2,14 +2,27 @@
 
 import { Response as ResponseType } from '@prisma/client';
 import { useEffect, useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 
-import {
-  handleOnSubmit,
-  ResponseFormResult,
-} from '@/app/tweet/[id]/action-response';
+import { ResponseFormResult, handleOnSubmit } from '@/app/tweet/[id]/action';
 
-const Submit = ({ tweetId }: { tweetId: number }) => {
+const Submit = ({
+  tweetId,
+  isSuccess,
+}: {
+  tweetId: number;
+  isSuccess: boolean;
+}) => {
+  const { pending } = useFormStatus();
+
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    if (isSuccess && !pending) {
+      setContent('');
+    }
+  }, [isSuccess, pending]);
+
   return (
     <>
       <input
@@ -19,8 +32,16 @@ const Submit = ({ tweetId }: { tweetId: number }) => {
         className="hidden"
         value={tweetId}
       />
-      <input type="text" name="content" />
-      <button type="submit">response</button>
+      <input
+        type="text"
+        name="content"
+        disabled={pending}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+      <button type="submit" disabled={pending}>
+        response
+      </button>
     </>
   );
 };
@@ -70,7 +91,10 @@ const Response = ({
       -------
       <div>{state.errors.content?.[0]}</div>
       <form action={formAction}>
-        <Submit tweetId={tweetId} />
+        <Submit
+          tweetId={tweetId}
+          isSuccess={Object.keys(state.errors).length === 0}
+        />
       </form>
     </div>
   );

@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 
 import { NextRequest, NextResponse } from 'next/server';
+
 import { getSession } from './utils/session';
 
 const URLS_PUBLIC_ONLY: Readonly<Record<string, boolean>> = {

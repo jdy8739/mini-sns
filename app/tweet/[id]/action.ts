@@ -3,51 +3,9 @@
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 
-import db from '@/db/db';
+import { createResponse } from '@/utils/response';
 import { getSession } from '@/utils/session';
-import { extractValuesFromFormData, parseErrors, wait } from '@/utils/utils';
-
-// TODO: cache responses
-export const getResponseByTweetId = async (tweetId: number) => {
-  try {
-    const responses = await db.response.findMany({ where: { tweetId } });
-
-    return responses;
-  } catch (e) {
-    return [];
-  }
-};
-
-export const createResponse = async ({
-  userId,
-  tweetId,
-  content,
-}: {
-  userId: number;
-  tweetId: number;
-  content: string;
-}) => {
-  try {
-    const { id } = await db.response.create({
-      data: { userId, tweetId, content },
-      select: { id: true },
-    });
-
-    return id;
-  } catch (e) {
-    return null;
-  }
-};
-
-export const deleteResponse = async ({ id }: { id: number }) => {
-  try {
-    await db.response.delete({ where: { id } });
-
-    return true;
-  } catch (e) {
-    return null;
-  }
-};
+import { wait, extractValuesFromFormData, parseErrors } from '@/utils/utils';
 
 const responseScheme = z.object({
   id: z.number().nullable().optional(),
