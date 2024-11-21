@@ -3,6 +3,8 @@
 import { Tweet } from '@prisma/client';
 
 import cache from '@/cache/cache';
+import { getNumberOfLikes } from '@/utils/like';
+import { getResponseByTweetId } from '@/utils/response';
 import { findTweetById, findTweetsByPagination } from '@/utils/tweets';
 
 /** find all tweets by pagination */
@@ -50,4 +52,26 @@ export const getCachedTweetById = async (id: number) => {
   const cacheTweetsById = cache(getTweetById, ['tweet', `${id}`]);
 
   return cacheTweetsById(id);
+};
+
+/** return cached number of likes */
+export const getCachedNumberOfLikes = async (tweetId: number) => {
+  const cacheNumberOfLikes = cache(
+    getNumberOfLikes,
+    ['tweet-likes', `${tweetId}`],
+    { tags: [`tweet-likes-${tweetId}`] },
+  );
+
+  return cacheNumberOfLikes(tweetId);
+};
+
+/** return cached response by tweet id */
+export const getCachedResponseByTweetId = async (tweetId: number) => {
+  const cacheResponseByTweetId = cache(
+    getResponseByTweetId,
+    ['tweet-responses', `${tweetId}`],
+    { tags: [`tweet-responses-${tweetId}`] },
+  );
+
+  return cacheResponseByTweetId(tweetId);
 };

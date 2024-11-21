@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 
@@ -47,11 +48,11 @@ const handleOnSubmit = async (_: ResponseFormResult, current: FormData) => {
 
       if (responseId) {
         values.id = String(responseId);
+
+        revalidateTag(`tweet-responses-${values.tweetId}`);
       } else {
         errors.content = ['Failed to create response'];
       }
-
-      // revalidateTag('tweets');
     } else {
       notFound();
     }

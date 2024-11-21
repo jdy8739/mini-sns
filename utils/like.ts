@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 import db from '@/db/db';
 
@@ -88,5 +88,5 @@ export const toggleLike = async ({
     await likeTweet({ userId, tweetId });
   }
 
-  revalidatePath(`/tweet/${tweetId}`);
+  revalidateTag(`tweet-likes-${tweetId}`);
 };
