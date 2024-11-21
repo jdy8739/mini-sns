@@ -1,7 +1,7 @@
 'use client';
 
 import { Response as ResponseType } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useOptimistic, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 
 import { ResponseFormResult, handleOnSubmit } from '@/app/tweet/[id]/action';
@@ -55,7 +55,10 @@ const Response = ({
   tweetId: number;
   responses: ResponseType[];
 }) => {
-  const [responseList, setResponseList] = useState<ResponseType[]>(responses);
+  const [optimisticResponseList, addOptimisticResponseList] = useOptimistic(
+    responses,
+    (prev, newResponse: ResponseType) => [...prev, newResponse],
+  );
 
   const [state, formAction] = useFormState<ResponseFormResult>(
     handleOnSubmit as unknown as (
@@ -68,29 +71,31 @@ const Response = ({
     },
   );
 
-  useEffect(() => {
-    if (state.id) {
-      setResponseList((prev) => [
-        ...prev,
-        {
-          id: state.id!,
-          content: state.content,
-          tweetId: state.tweetId,
-          createdAt: new Date(),
-          userId,
-        },
-      ]);
-    }
-  }, [userId, state]);
+  const handleOnFormSubmit = useCallback(
+    async (formData: FormData) => {
+      addOptimisticResponseList({
+        id: Math.random(),
+        content: formData.get('content') as string,
+        tweetId: Number(formData.get('tweetId')),
+        createdAt: new Date(),
+        userId,
+      });
+
+      const action = formAction as unknown as (formData: FormData) => void;
+
+      action(formData);
+    },
+    [addOptimisticResponseList, formAction, userId],
+  );
 
   return (
     <div>
-      {responseList.map((response) => (
+      {optimisticResponseList.map((response) => (
         <div key={response.id}>{response.content}</div>
       ))}
       -------
       <div>{state.errors.content?.[0]}</div>
-      <form action={formAction}>
+      <form action={handleOnFormSubmit}>
         <Submit
           tweetId={tweetId}
           isSuccess={Object.keys(state.errors).length === 0}

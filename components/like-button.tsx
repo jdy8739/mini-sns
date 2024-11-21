@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useOptimistic } from 'react';
 
 import { toggleLike } from '@/utils/like';
 
@@ -13,17 +13,20 @@ const LikeButton = ({
   tweetId: number;
   isLiked: boolean;
 }) => {
-  const [isLikedState, setIsLikedState] = useState(isLiked);
+  const [optimisticIsLiked, addOptimisticIsLiked] = useOptimistic(
+    isLiked,
+    (prev) => !prev,
+  );
 
   const handleOnLike = useCallback(async () => {
-    await toggleLike({ userId, tweetId, isLiked });
+    addOptimisticIsLiked(undefined);
 
-    setIsLikedState((prev) => !prev);
-  }, [userId, tweetId, isLiked]);
+    await toggleLike({ userId, tweetId, isLiked });
+  }, [userId, tweetId, isLiked, addOptimisticIsLiked]);
 
   return (
     <button type="button" onClick={handleOnLike}>
-      {isLikedState ? 'unlike' : 'like'}
+      {optimisticIsLiked ? 'unlike' : 'like'}
     </button>
   );
 };
