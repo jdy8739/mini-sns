@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { findUserById } from '@/utils/auth';
@@ -24,6 +25,14 @@ const ProfilePage = async () => {
           <p className="text-gray-700 text-lg">
             {user.bio || 'No bio available yet'}
           </p>
+        </div>
+        <div>
+          <Link
+            href="/"
+            className="w-full p-4 rounded-lg font-semibold transition-all duration-200 text-white shadow-sm bg-blue-600 hover:bg-blue-700 text-center"
+          >
+            Go see tweets!
+          </Link>
         </div>
       </section>
     </main>

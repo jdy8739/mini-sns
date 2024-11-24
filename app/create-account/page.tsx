@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
 
 import { CreateAccountResult, handleOnSubmit } from './action';
@@ -60,6 +61,12 @@ const Submit = ({ isTried, errors }: CreateAccountResult) => {
           isNormal={isNormal}
           isCertified={isCertified}
         />
+        <Link
+          href="/log-in"
+          className="w-full p-4 rounded-lg font-semibold transition-all duration-200 text-white shadow-sm bg-blue-600 hover:bg-blue-700 text-center"
+        >
+          To log in
+        </Link>
       </div>
     </div>
   );

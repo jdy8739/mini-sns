@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
 
 import { handleOnSubmit, FormResult } from './action';
@@ -43,6 +44,12 @@ const Submit = ({ isTried, errors }: FormResult) => {
           isNormal={isNormal}
           isCertified={isCertified}
         />
+        <Link
+          href="/create-account"
+          className="w-full p-4 rounded-lg font-semibold transition-all duration-200 text-white shadow-sm bg-blue-600 hover:bg-blue-700 text-center"
+        >
+          Create an account
+        </Link>
       </div>
     </div>
   );
