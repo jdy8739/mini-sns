@@ -1,7 +1,7 @@
 'use client';
 
 import { Tweet } from '@prisma/client';
-import { useCallback, useState } from 'react';
+import { Suspense, useCallback, useState } from 'react';
 
 import { getCachedTweets } from './action';
 
@@ -28,10 +28,12 @@ const Home = () => {
       <div className="min-w-[320px] max-w-4xl w-full mx-auto py-8 px-4 flex flex-col items-center">
         <TweetList tweets={tweets} />
         <div className="mt-8">
-          <Pagination
-            totalCount={totalCount}
-            onPageChange={handleOnPageChange}
-          />
+          <Suspense fallback={<div>loading...</div>}>
+            <Pagination
+              totalCount={totalCount}
+              onPageChange={handleOnPageChange}
+            />
+          </Suspense>
         </div>
       </div>
     </main>
