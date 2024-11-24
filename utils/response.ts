@@ -2,7 +2,6 @@
 
 import db from '@/db/db';
 
-// TODO: cache responses
 export const getResponseByTweetId = async (tweetId: number) => {
   try {
     const responses = await db.response.findMany({ where: { tweetId } });
