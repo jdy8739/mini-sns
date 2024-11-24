@@ -1,5 +1,6 @@
-import NavBar from '@/components/navbar';
 import './globals.css';
+
+import NavBar from '@/components/navbar';
 import { getSession } from '@/utils/session';
 
 export default async function RootLayout({
@@ -11,9 +12,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen justify-center items-center">
+      <body className="relative bg-gray-50">
         {userId && <NavBar />}
-        {children}
+        <div className="flex flex-col min-h-screen justify-center items-center">
+          {children}
+        </div>
       </body>
     </html>
   );

@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="w-full bg-white shadow-lg">
+    <nav className="w-full bg-white shadow-lg absolute">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-end gap-6">
         <Link
           href="/profile"
