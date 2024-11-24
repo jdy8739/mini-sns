@@ -1,4 +1,5 @@
 import { Tweet } from '@prisma/client';
+
 import db from '@/db/db';
 
 export type TweetWithUser = Tweet & { user: { email: string } };

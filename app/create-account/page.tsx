@@ -81,11 +81,11 @@ const CreateAccountPage = () => {
   );
 
   return (
-    <div>
+    <main>
       <form className="flex flex-col" action={formAction}>
         <Submit {...state} />
       </form>
-    </div>
+    </main>
   );
 };
 

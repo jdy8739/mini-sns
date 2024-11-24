@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+
 import db from '@/db/db';
 
 export const hashPassword = async (password: string) => {

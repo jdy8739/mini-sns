@@ -57,9 +57,9 @@ const Pagination = ({
   }, [page, size, totalCount]);
 
   return (
-    <section>
+    <section className="flex justify-center gap-4 mt-6">
       <button
-        className="w-20 border-slate-400 border-2 rounded-md text-slate-400 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
         type="button"
         disabled={isPrevDisabled}
         onClick={() => {
@@ -70,10 +70,10 @@ const Pagination = ({
           router.push(`${pathname}?page=${page - 1}&size=${size}`);
         }}
       >
-        prev
+        Previous
       </button>
       <button
-        className="w-20 border-slate-400 border-2 rounded-md text-slate-400 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
         type="button"
         disabled={isNextDisabled}
         onClick={() => {
@@ -84,7 +84,7 @@ const Pagination = ({
           router.push(`${pathname}?page=${page + 1}&size=${size}`);
         }}
       >
-        next
+        Next
       </button>
     </section>
   );

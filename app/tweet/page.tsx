@@ -16,22 +16,27 @@ const AddTweet = ({ isTried, errors }: TweetFormResult) => {
 
   const showError = isTried && !pending;
   return (
-    <div className="h-lvh w-full flex justify-center">
-      <div className="flex flex-col justify-center items-center gap-3 h-full w-80 focus-within::outline-none text-slate-400">
-        <Input
-          placeholder="tweet"
-          name="tweet"
-          required
-          showError={showError}
-          isNormal={isNormal}
-          errors={errors.tweet}
-        />
-        <Button
-          pending={pending}
-          isTried={isTried}
-          isNormal={isNormal}
-          isCertified={isCertified}
-        />
+    <div className="min-h-screen w-full bg-blue-50">
+      <div className="max-w-md mx-auto px-4 py-8 flex flex-col justify-center items-center min-h-screen">
+        <div className="w-full bg-white rounded-lg shadow-sm p-6 space-y-4">
+          <h1 className="text-2xl font-semibold text-blue-900 text-center mb-4">
+            Create Tweet
+          </h1>
+          <Input
+            placeholder="What's happening?"
+            name="tweet"
+            required
+            showError={showError}
+            isNormal={isNormal}
+            errors={errors.tweet}
+          />
+          <Button
+            pending={pending}
+            isTried={isTried}
+            isNormal={isNormal}
+            isCertified={isCertified}
+          />
+        </div>
       </div>
     </div>
   );
@@ -48,8 +53,11 @@ const TweetPage = () => {
   );
 
   return (
-    <main>
-      <form className="flex flex-col" action={formAction}>
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100">
+      <form
+        className="w-full h-full flex flex-col items-center justify-center"
+        action={formAction}
+      >
         <AddTweet {...state} />
       </form>
     </main>

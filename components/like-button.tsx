@@ -25,8 +25,16 @@ const LikeButton = ({
   }, [userId, tweetId, isLiked, addOptimisticIsLiked]);
 
   return (
-    <button type="button" onClick={handleOnLike}>
-      {optimisticIsLiked ? 'unlike' : 'like'}
+    <button
+      type="button"
+      onClick={handleOnLike}
+      className={`px-4 py-2 rounded-lg transition-colors ${
+        optimisticIsLiked
+          ? 'bg-red-500 text-white hover:bg-red-600'
+          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+      }`}
+    >
+      {optimisticIsLiked ? 'Unlike' : 'Like'}
     </button>
   );
 };

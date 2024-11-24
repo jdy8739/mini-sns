@@ -1,11 +1,12 @@
 'use client';
 
-import { useCallback, useState } from 'react';
 import { Tweet } from '@prisma/client';
-import Pagination from '@/components/pagination';
+import { useCallback, useState } from 'react';
 
-import TweetList from '@/components/tweet-list';
 import { getCachedTweets } from './action';
+
+import Pagination from '@/components/pagination';
+import TweetList from '@/components/tweet-list';
 
 const Home = () => {
   const [tweets, setTweets] = useState<Tweet[] | null>(null);
@@ -23,10 +24,15 @@ const Home = () => {
   }, []);
 
   return (
-    <main>
-      <div>
+    <main className="min-h-screen bg-gray-50 flex items-center">
+      <div className="min-w-[320px] max-w-4xl w-full mx-auto py-8 px-4 flex flex-col items-center">
         <TweetList tweets={tweets} />
-        <Pagination totalCount={totalCount} onPageChange={handleOnPageChange} />
+        <div className="mt-8">
+          <Pagination
+            totalCount={totalCount}
+            onPageChange={handleOnPageChange}
+          />
+        </div>
       </div>
     </main>
   );

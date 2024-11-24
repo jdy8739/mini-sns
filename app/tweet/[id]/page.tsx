@@ -33,26 +33,28 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
   const responses = await getCachedResponseByTweetId(tweetId);
 
   return (
-    <main>
-      <section>
-        <div>
-          <span>{tweet.userId}</span>
+    <main className="flex flex-col items-center w-full p-4">
+      <section className="w-full max-w-2xl border rounded-lg p-6 bg-white shadow-sm">
+        <div className="mb-2">
+          <span className="text-gray-600">User ID: {tweet.userId}</span>
         </div>
-        <p>{tweet.tweet}</p>
-        <div>
-          <span>{formatToTimeAgo(new Date(tweet.createdAt).getTime())}</span>
+        <p className="text-xl font-medium text-gray-900 mb-4">{tweet.tweet}</p>
+        <div className="mb-2">
+          <span className="text-sm text-gray-500">
+            {formatToTimeAgo(new Date(tweet.createdAt).getTime())}
+          </span>
         </div>
-        <div>
-          <span>{tweet.user.email}</span>
+        <div className="mb-4">
+          <span className="text-gray-600">{tweet.user.email}</span>
         </div>
-        <div>
-          <span>{`${numberOfLikes} likes`}</span>
+        <div className="flex items-center gap-4 border-t pt-4">
+          <span className="text-gray-600">{`${numberOfLikes} likes`}</span>
           <div>
             <LikeButton userId={userId} tweetId={tweetId} isLiked={isLiked} />
           </div>
         </div>
       </section>
-      <section>
+      <section className="w-full max-w-2xl mt-6">
         <Response tweetId={tweetId} userId={userId} responses={responses} />
       </section>
     </main>

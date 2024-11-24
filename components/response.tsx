@@ -37,10 +37,17 @@ const Submit = ({
         name="content"
         disabled={pending}
         value={content}
+        required
         onChange={(e) => setContent(e.target.value)}
+        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+        placeholder="Write a response..."
       />
-      <button type="submit" disabled={pending}>
-        response
+      <button
+        type="submit"
+        disabled={pending}
+        className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+      >
+        Response
       </button>
     </>
   );
@@ -89,18 +96,26 @@ const Response = ({
   );
 
   return (
-    <div>
+    <div className="space-y-6">
       {optimisticResponseList.map((response) => (
-        <div key={response.id}>{response.content}</div>
+        <div
+          key={response.id}
+          className="p-4 bg-white rounded-lg shadow-sm border"
+        >
+          <p className="text-gray-900">{response.content}</p>
+        </div>
       ))}
-      -------
-      <div>{state.errors.content?.[0]}</div>
-      <form action={handleOnFormSubmit}>
-        <Submit
-          tweetId={tweetId}
-          isSuccess={Object.keys(state.errors).length === 0}
-        />
-      </form>
+      <div className="border-t border-gray-200 pt-6">
+        <div className="text-red-500 text-sm mb-4">
+          {state.errors.content?.[0]}
+        </div>
+        <form action={handleOnFormSubmit} className="space-y-4">
+          <Submit
+            tweetId={tweetId}
+            isSuccess={Object.keys(state.errors).length === 0}
+          />
+        </form>
+      </div>
     </div>
   );
 };
