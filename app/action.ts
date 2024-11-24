@@ -5,7 +5,7 @@ import { revalidateTag } from 'next/cache';
 
 import cache from '@/cache/cache';
 import { getNumberOfLikes } from '@/utils/like';
-import { getResponseByTweetId } from '@/utils/response';
+import { deleteResponse, getResponseByTweetId } from '@/utils/response';
 import {
   deleteTweet,
   findTweetById,
@@ -86,5 +86,19 @@ export const revalidateTweetsAfterDelete = async (tweetId: number) => {
 
   if (deleted) {
     revalidateTag('tweets');
+  }
+};
+
+export const revalidateResponsesAfterDelete = async ({
+  tweetId,
+  responseId,
+}: {
+  tweetId: number;
+  responseId: number;
+}) => {
+  const deleted = await deleteResponse(responseId);
+
+  if (deleted) {
+    revalidateTag(`tweet-responses-${tweetId}`);
   }
 };

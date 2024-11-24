@@ -4,6 +4,7 @@ import { Response as ResponseType } from '@prisma/client';
 import { useCallback, useEffect, useOptimistic, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 
+import { revalidateResponsesAfterDelete } from '@/app/action';
 import { ResponseFormResult, handleOnSubmit } from '@/app/tweet/[id]/action';
 
 const Submit = ({
@@ -102,7 +103,25 @@ const Response = ({
           key={response.id}
           className="p-4 bg-white rounded-lg shadow-sm border"
         >
-          <p className="text-gray-900">{response.content}</p>
+          <div>
+            <p className="text-gray-900">{response.content}</p>
+          </div>
+          {response.userId === userId && (
+            <div className="mt-2 flex justify-end">
+              <button
+                type="button"
+                className="text-sm text-red-500 hover:text-red-600 transition-colors px-3 py-1 rounded-md hover:bg-red-50"
+                onClick={() =>
+                  revalidateResponsesAfterDelete({
+                    tweetId,
+                    responseId: response.id,
+                  })
+                }
+              >
+                delete
+              </button>
+            </div>
+          )}
         </div>
       ))}
       <div className="border-t border-gray-200 pt-6">

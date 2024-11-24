@@ -34,7 +34,7 @@ export const createResponse = async ({
   }
 };
 
-export const deleteResponse = async ({ id }: { id: number }) => {
+export const deleteResponse = async (id: number) => {
   try {
     await db.response.delete({ where: { id } });
 
