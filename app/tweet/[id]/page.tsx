@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import {
@@ -36,7 +37,9 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
   const responses = await getCachedResponseByTweetId(tweetId);
 
   return (
-    <main className="flex flex-col items-center w-full p-4">
+    <main
+      className={`flex flex-col items-center w-full p-4 ${responses?.length > 2 && 'py-40'}`}
+    >
       <section className="w-full max-w-2xl border rounded-lg p-6 bg-white shadow-sm">
         <div className="mb-2">
           <span className="text-gray-600">User ID: {tweet.userId}</span>
@@ -66,6 +69,14 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
       </section>
       <section className="w-full max-w-2xl mt-6">
         <Response tweetId={tweetId} userId={userId} responses={responses} />
+        <div className="mt-10">
+          <Link
+            href="/"
+            className="w-full p-4 rounded-lg font-semibold transition-all duration-200 text-white shadow-sm bg-blue-600 hover:bg-blue-700 text-center"
+          >
+            To List
+          </Link>
+        </div>
       </section>
     </main>
   );

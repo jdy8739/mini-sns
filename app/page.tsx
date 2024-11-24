@@ -1,6 +1,7 @@
 'use client';
 
 import { Tweet } from '@prisma/client';
+import Link from 'next/link';
 import { Suspense, useCallback, useState } from 'react';
 
 import { getCachedTweets } from './action';
@@ -24,7 +25,9 @@ const Home = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center">
+    <main
+      className={`min-h-screen bg-gray-50 flex items-center ${tweets && tweets!.length > 10 && 'py-40'}`}
+    >
       <div className="min-w-[320px] max-w-4xl w-full mx-auto py-8 px-4 flex flex-col items-center">
         <TweetList tweets={tweets} />
         <div className="mt-8">
@@ -34,6 +37,14 @@ const Home = () => {
               onPageChange={handleOnPageChange}
             />
           </Suspense>
+        </div>
+        <div className="mt-8">
+          <Link
+            href="/tweet"
+            className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200 px-4 py-2 rounded-md hover:bg-blue-50"
+          >
+            Go write a tweet
+          </Link>
         </div>
       </div>
     </main>

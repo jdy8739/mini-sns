@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
 
 import { handleOnSubmit, TweetFormResult } from './action';
@@ -16,7 +17,7 @@ const AddTweet = ({ isTried, errors }: TweetFormResult) => {
 
   const showError = isTried && !pending;
   return (
-    <div className="min-h-screen w-full bg-blue-50">
+    <div className="min-h-screen w-full bg-gray-50">
       <div className="max-w-md mx-auto px-4 py-8 flex flex-col justify-center items-center min-h-screen">
         <div className="w-full bg-white rounded-lg shadow-sm p-6 space-y-4">
           <h1 className="text-2xl font-semibold text-blue-900 text-center mb-4">
@@ -36,6 +37,14 @@ const AddTweet = ({ isTried, errors }: TweetFormResult) => {
             isNormal={isNormal}
             isCertified={isCertified}
           />
+          <div>
+            <Link
+              href="/"
+              className="w-full block text-center p-4 rounded-lg font-semibold transition-all duration-200 bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+            >
+              To list
+            </Link>
+          </div>
         </div>
       </div>
     </div>
