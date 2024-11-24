@@ -57,3 +57,15 @@ export const saveTweet = async (tweet: string, userId: number) => {
     return null;
   }
 };
+
+export const deleteTweet = async (id: number) => {
+  try {
+    await db.tweet.delete({
+      where: { id },
+    });
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+};

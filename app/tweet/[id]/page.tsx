@@ -7,6 +7,7 @@ import {
 } from '@/app/action';
 import LikeButton from '@/components/like-button';
 import Response from '@/components/response';
+import TweetDeleteButton from '@/components/tweet-delete-button';
 import { formatToTimeAgo } from '@/utils/date';
 import { checkIsLiked } from '@/utils/like';
 import { getSession } from '@/utils/session';
@@ -25,6 +26,8 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
   }
 
   const userId = (await getSession()).id;
+
+  const isMyTweet = tweet.userId === userId;
 
   const numberOfLikes = await getCachedNumberOfLikes(tweetId);
 
@@ -47,11 +50,18 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
         <div className="mb-4">
           <span className="text-gray-600">{tweet.user.email}</span>
         </div>
-        <div className="flex items-center gap-4 border-t pt-4">
-          <span className="text-gray-600">{`${numberOfLikes} likes`}</span>
-          <div>
-            <LikeButton userId={userId} tweetId={tweetId} isLiked={isLiked} />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4 border-t pt-4">
+            <span className="text-gray-600">{`${numberOfLikes} likes`}</span>
+            <div>
+              <LikeButton userId={userId} tweetId={tweetId} isLiked={isLiked} />
+            </div>
           </div>
+          {isMyTweet && (
+            <div className="pt-4">
+              <TweetDeleteButton tweetId={tweetId} />
+            </div>
+          )}
         </div>
       </section>
       <section className="w-full max-w-2xl mt-6">

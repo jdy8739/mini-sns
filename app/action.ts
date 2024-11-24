@@ -1,11 +1,16 @@
 'use server';
 
 import { Tweet } from '@prisma/client';
+import { revalidateTag } from 'next/cache';
 
 import cache from '@/cache/cache';
 import { getNumberOfLikes } from '@/utils/like';
 import { getResponseByTweetId } from '@/utils/response';
-import { findTweetById, findTweetsByPagination } from '@/utils/tweets';
+import {
+  deleteTweet,
+  findTweetById,
+  findTweetsByPagination,
+} from '@/utils/tweets';
 
 /** find all tweets by pagination */
 export const getTweetsByPagination = async ({
@@ -74,4 +79,12 @@ export const getCachedResponseByTweetId = async (tweetId: number) => {
   );
 
   return cacheResponseByTweetId(tweetId);
+};
+
+export const revalidateTweetsAfterDelete = async (tweetId: number) => {
+  const deleted = await deleteTweet(tweetId);
+
+  if (deleted) {
+    revalidateTag('tweets');
+  }
 };
