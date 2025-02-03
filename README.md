@@ -49,8 +49,16 @@ https://login-beta-roan.vercel.app/
 # 의존성 설치
 npm install
 
+# prisma/migrations 디렉토리 삭제
+rm -rf prisma/migrations
+
+# schema.prisma 파일에 13번 째 줄을 provider = "sqlite"로 변경
+awk '{if(NR==13) print "provider = \"sqlite\""; else print $0}' prisma/schema.prisma > temp && mv temp prisma/schema.prisma
+
+# 로컬구동을 위한 .env파일 생성
+echo -e 'DATABASE_URL="file:./database.db"\n# Hex hash\nCOOKIE_PASSWORD="57EDF4A22BE3C955AC49DA2E2107B67A"' > .env
+
 # Prisma 초기화 및 마이그레이션
-npx prisma init
 npx prisma migrate dev
 
 # 개발 서버 실행
